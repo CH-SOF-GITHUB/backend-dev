@@ -85,13 +85,13 @@ router.get('/status/edit', async(req, res) => {
 router.post('/login', async(req, res) => {
     try {
         let {email, password} = req.body;
-        if(!email || !password) {
+        if(email == null || password == null) {
             res.status(404).json({success: false, message: "All fileds are required"})
         }
         // find user
         let user = await User.findOne({email}).select("+password").select("+isActive");
         if(!user){
-             return re.status(404).json({success: false, message: "Account does not exist"});
+             return res.status(404).json({success: false, message: "Account does not exist"});
         } else {
             let isCorrectPassword = await bcrypt.compare(password, user.password);
             if(isCorrectPassword) {
@@ -103,7 +103,8 @@ router.post('/login', async(req, res) => {
 
                 return res.status(200).json({success: true, user, token: token});
             }else {
-                return res.status(404).json({success: false, message: "Verify your credentials"});
+                const msg = "Verify your credentials";
+                return res.status(404).json({success: false, message: msg});
             }
         }
     } catch (error) {

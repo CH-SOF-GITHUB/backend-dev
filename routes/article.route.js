@@ -20,7 +20,7 @@ router.post('/', async (req, res) =>  {
 });
 
 // méthode GET: afficher la liste des articles
-router.get('/', verifyToken ,async (req, res) => {
+router.get('/' ,async (req, res) => {
   // retour tableau
   try {
     const articles = await Article.find({}, null, { sort: { '_id': -1 } }).populate("scategorieID");
@@ -31,8 +31,10 @@ router.get('/', verifyToken ,async (req, res) => {
 })
 
 //méthode GET par pagination
-router.get('/art/pagination', async (req, res) => {
-
+/* The `/art/pagination` route is used to implement pagination for retrieving a subset of
+articles based on the specified page number and page size. Here's a breakdown of what
+the route does: */
+router.get('/art/pagination', verifyToken ,async (req, res) => {
   const filtre = req.query.filtre || "";
   const page = parseInt(req.query.page);
   const pageSize = parseInt(req.query.pageSize);
