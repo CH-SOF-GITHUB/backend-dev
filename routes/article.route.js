@@ -50,12 +50,7 @@ router.get('/art/pagination', verifyToken, async (req, res) => {
   const endIndex = page * pageSize
 
   const articles = await Article.find(
-    { designation: { $regex: filtre, $options: 'i' } },
-    null,
-    { sort: { _id: -1 } }
-  )
-    .populate('scategorieID')
-    .exec()
+    { designation: { $regex: filtre, $options: 'i' } }, null,{ sort: { _id: -1 } }).populate('scategorieID').exec()
   //Slice the products array based on the indexes
 
   const paginatedProducts = articles.slice(startIndex, endIndex)
@@ -63,6 +58,9 @@ router.get('/art/pagination', verifyToken, async (req, res) => {
   // calculate the number total of pages
   const totalPages = Math.ceil(articles.length / pageSize)
 
+  // calculate total items
+  const totalItems = articles.length;
+  
   // Send the paginated products and total pages
   // res.json({ products: paginatedProducts, totalPages });
   res.json({
