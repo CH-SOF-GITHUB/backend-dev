@@ -70,7 +70,7 @@ router.get('/art/pagination', verifyToken, async (req, res) => {
     message: 'articles.details.success',
     status: res.statusCode,
     data: {
-      seo: paginatedProducts, // Les articles paginés
+      articles: paginatedProducts, // Les articles paginés
       pagination: {
         totalItems, // Nombre total d'articles
         perPage: pageSize, // Nombre d'articles par page
