@@ -60,13 +60,10 @@ router.get('/art/pagination', verifyToken, async (req, res) => {
 
   // calculate total items
   const totalItems = articles.length;
-  
+
   // Send the paginated products and total pages
   // res.json({ products: paginatedProducts, totalPages });
   res.json({
-    success: true,
-    message: 'articles.details.success',
-    status: res.statusCode,
     data: {
       articles: paginatedProducts, // Les articles paginés
       pagination: {
@@ -75,7 +72,10 @@ router.get('/art/pagination', verifyToken, async (req, res) => {
         page, // Page actuelle
         totalPages // Nombre total de pages
       }
-    }
+    },
+    success: true,
+    message: 'articles.details.success',
+    status: res.statusCode,
   })
 })
 
